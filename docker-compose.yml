@@ -1,0 +1,53 @@
+version: '3'
+services:
+  db-service:
+    image: mysql:8.0
+    ports:
+      - "3305:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: new_user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: product
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+       - commonnetwork
+
+  be-service:
+      build:
+        context: ./backend
+        dockerfile: Dockerfile
+      ports:
+        - "8080:8080"
+      depends_on:
+        - db-service
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:mysql://db-service:3306/product
+        SPRING_DATASOURCE_USERNAME: new_user
+        SPRING_DATASOURCE_PASSWORD: password
+      networks:
+       - commonnetwork
+  fe-service:
+      build:
+        context: ./frontend
+        dockerfile: Dockerfile
+      depends_on:
+        - be-service
+        - db-service
+      ports:
+        - "3000:80"
+      # environment:
+      #   REACT_APP_API_BASE_URL: http://localhost:8080
+      networks:
+        - commonnetwork
+
+networks:
+   commonnetwork:
+    driver: bridge
+
+volumes:
+  mysql_data:
+
+    #  driver: bridge
+      #  driver: host
