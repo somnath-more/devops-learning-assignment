@@ -3,11 +3,9 @@ name: Java CI with Maven
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  paths:
-      - "github-action-demo/**"
-      - ".github/workflows/github-action-demo.yml"    
+    paths:
+       - "github-action-demo/**"
+       - ".github/workflows/github-action-demo.yml"    
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
