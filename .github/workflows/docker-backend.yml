@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: CI Workflow
 # Trigger the workflow
 on:  
   push:
@@ -10,7 +10,7 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   build:
-    name: BE Github-Action Service Sonar Analysis
+    name: BE backend-Action build analysis
     runs-on: ubuntu-latest
     timeout-minutes: 8  
     permissions:
