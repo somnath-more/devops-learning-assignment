@@ -12,7 +12,10 @@ jobs:
   build:
     name: BE Github-Action Service Sonar Analysis
     runs-on: ubuntu-latest
-    timeout-minutes: 8                                    
+    timeout-minutes: 8  
+    permissions:
+      contents: read
+      packages: write                                  
     defaults:
       run:
         working-directory: backend
