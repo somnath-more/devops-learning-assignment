@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-       - "github-action-demo/**"
+       - "backend/**"
        - ".github/workflows/github-action-demo.yml"    
   pull_request:
     types: [opened, synchronize, reopened]
@@ -27,3 +27,6 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean package
+
+
+      
