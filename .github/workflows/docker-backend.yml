@@ -12,10 +12,7 @@ jobs:
   build:
     name: BE backend-Action build analysis
     runs-on: ubuntu-latest
-    timeout-minutes: 8  
-    permissions:
-      contents: read
-      packages: write                                  
+    timeout-minutes: 8                                
     defaults:
       run:
         working-directory: backend
