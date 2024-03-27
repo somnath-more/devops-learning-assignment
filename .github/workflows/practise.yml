@@ -52,6 +52,7 @@ jobs:
       - name: List files in the repository
         run: echo "🍏 This job's status is ${{ job.status }}."
   action-workflow-advanced:
+       if: github.actor == 'somnath-more' 
        runs-on: ubuntu-latest
        needs: 
          - action-workflow-explore
@@ -61,3 +62,16 @@ jobs:
              echo "Hello, GitHub Actions!"
              echo "Current repository owner: $GITHUB_REPOSITORY_OWNER"
              echo "Current repository: $GITHUB_REPOSITORY"
+ 
+#Explore Matrix
+  example_matrix:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                version: [10, 12, 14]
+        needs: action-workflow-explore
+        steps:
+          - uses: actions/setup-node@v4
+            with:
+             node-version: ${{ matrix.version }}
+              
