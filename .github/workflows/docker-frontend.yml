@@ -25,7 +25,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '21' # or any preferred node version
-
+## Implement catch
       - name: Install the dependencies
         run: npm install --legacy-peer-deps
       - name: Test The Application

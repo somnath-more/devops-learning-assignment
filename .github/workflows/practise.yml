@@ -49,6 +49,7 @@ jobs:
              echo "My variable token in secrets: ${{ secrets.MY_VARIABLE_NAME }}"
       - name: Runner details
         run: echo "🖥️ The workflow is now ready to test your code on the runner."
+          
       - name: List files in the repository
         run: echo "🍏 This job's status is ${{ job.status }}."
   action-workflow-advanced:
