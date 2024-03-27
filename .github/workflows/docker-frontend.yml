@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 4
     defaults:
         run:
-          working-directory: backend
+          working-directory: frontend
     permissions:
        contents: write
        packages: write
@@ -41,11 +41,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
     
-    #   - name: Build and push Image to ghcr
-    #     uses: docker/build-push-action@v3
-    #     with:
-    #       push: true
-    #       tags: ghcr.io/${{ github.repository_owner }}/docker-backend:frontend
-    #       context: frontend/
+      - name: Build and push Image to ghcr
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/docker-backend:frontend
+          context: frontend/
 
 
