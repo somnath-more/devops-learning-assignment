@@ -1,0 +1,49 @@
+name: Exploration of GitHub Actions
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+
+jobs:
+  action-workflow-explore:
+    runs-on: ubuntu-latest
+   
+    env:
+        MY_ENV_VAR: "Hello from env variable!"
+    steps:
+      - name: Print basic information
+        run: |
+          echo "Hello, GitHub Actions!"
+          echo "Current repository owner: $GITHUB_REPOSITORY_OWNER"
+          echo "Current repository: $GITHUB_REPOSITORY"
+          echo "Current branch: $GITHUB_REF"
+          echo "GitHub event name: $GITHUB_EVENT_NAME"
+          echo "GitHub event payload: $GITHUB_EVENT_PATH"
+          echo "GitHub actor: $GITHUB_ACTOR"
+          echo "GitHub workspace: $GITHUB_WORKSPACE"
+          echo "GitHub SHA: $GITHUB_SHA"
+
+
+      - name: Print environment variables
+        run: |
+          env
+
+      - name: Print GitHub token
+        run: |
+          echo "GitHub token: $GITHUB_TOKEN"
+
+      - name: Print a secret
+        run: |
+          echo "My secret: ${{ secrets.MY_SECRET_NAME }}"
+          echo "My USER SERVICE TOKEN: ${{ secrets.USER_SERVICE_TOKEN }}"
+      - name: print a codespace secret
+        run: |
+             echo "My codespace secret: ${{ secrets.MY_CODESPACE_NAME }}"
+      - name: print a variable token in secrets
+        run: |
+             echo "My variable token in secrets: ${{ secrets.MY_VARIABLE_NAME }}"

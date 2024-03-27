@@ -1,4 +1,4 @@
-name: CI Workflow
+name: CI Workflow for Backend Application
 # Trigger the workflow
 on:  
   push:
@@ -9,7 +9,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  build:
+  build-backend:
     name: BE backend-Action build analysis
     runs-on: ubuntu-latest
     timeout-minutes: 8                                
