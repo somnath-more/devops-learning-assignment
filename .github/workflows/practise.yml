@@ -47,3 +47,18 @@ jobs:
       - name: print a variable token in secrets
         run: |
              echo "My variable token in secrets: ${{ secrets.MY_VARIABLE_NAME }}"
+             - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+             - name: List files in the repository
+               run: |
+                 ls ${{ github.workspace }}
+             - run: echo "🍏 This job's status is ${{ job.status }}."
+  action-workflow-advanced:
+       runs-on: ubuntu-latest
+       needs: 
+         - action-workflow-explore
+       steps:
+         - name: Print basic information
+           run: |
+             echo "Hello, GitHub Actions!"
+             echo "Current repository owner: $GITHUB_REPOSITORY_OWNER"
+             echo "Current repository: $GITHUB_REPOSITORY"
