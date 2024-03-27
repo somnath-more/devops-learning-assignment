@@ -42,13 +42,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/docker-frontend:02
+          tags: ghcr.io/${{ github.repository_owner }}/docker-backend:frontend
           context: frontend/
 
-  test:
-    runs-on: ubuntu-latest
-    timeout-minutes: 4
 
-    steps:
-      - name: Test the Application
-        run: echo "Testing"
