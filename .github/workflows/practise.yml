@@ -51,47 +51,43 @@ jobs:
         run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
         run: echo "🍏 This job's status is ${{ job.status }}."
-  action-workflow-advanced:
-       if: github.actor == 'somnath-more' 
-       runs-on: ubuntu-latest
-       needs: 
-         - action-workflow-explore
-       steps:
-         - name: Print basic information
-           run: |
-             echo "Hello, GitHub Actions!"
-             echo "Current repository owner: $GITHUB_REPOSITORY_OWNER"
-             echo "Current repository: $GITHUB_REPOSITORY"
-
-         - name: Calculate Expression
-           run: |
-               expr 1 + 1 > output.log
-         - name: Upload output file
-           uses: actions/upload-artifact@v4
-           with:
-               name: output-log-file
-               path: output.log
 #Explore Matrix
   example_matrix:
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                version: [10, 12, 14]
-        needs: action-workflow-explore
-        steps:
-          - uses: actions/setup-node@v4
-            with:
-             node-version: ${{ matrix.version }}
-      
-          
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+            version: [10, 12, 14]
+    needs: action-workflow-explore
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+         node-version: ${{ matrix.version }}
+         
+#Explore Matrix
+  action-workflow-advanced:
+     if: github.actor == 'somnath-more' 
+     runs-on: ubuntu-latest
+     needs: 
+       - action-workflow-explore
+     steps:
+      - name: Print basic information
+        run: |
+          echo "Hello, GitHub Actions!"
+          echo "Current repository owner: $GITHUB_REPOSITORY_OWNER"
+          echo "Current repository: $GITHUB_REPOSITORY"
+  
+      - name: Calculate Expression
+        run: |
+             expr 1 + 1 > output.log
+             echo $((1 + 1)) > output_value.txt  # Store the calculated value in a text file
+  
   example-job:
-        name: Final Job Output
-        runs-on: ubuntu-latest
-        needs: 
-            - example_matrix 
-            - action-workflow-advanced
-        steps:
-            - name: Download a single artifact
-              uses: actions/download-artifact@v4
-              with:
-                 name: output-log-file
+     name: Final Job Output!!
+     runs-on: ubuntu-latest
+     needs: 
+       - example_matrix 
+       - action-workflow-advanced
+     steps:
+       - name: Retrieve calculated value
+         run: |
+           cat $GITHUB_WORKSPACE/output_value.txt  # Retrieve the calculated value from the file
