@@ -1,0 +1,17 @@
+name: Self Hosted Runner job will execute
+
+on:
+  workflow_dispatch: 
+
+jobs:
+
+  build:
+
+    runs-on: 
+        - self-hosted
+        - codemaya
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run on line script on my runner
+      run: echo "HEllo I am running on self hosted runner"
