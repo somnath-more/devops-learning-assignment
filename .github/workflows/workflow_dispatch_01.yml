@@ -1,4 +1,4 @@
-name: Workflow dispatch
+name: Notification Dispatch Event
 
 on:
 
