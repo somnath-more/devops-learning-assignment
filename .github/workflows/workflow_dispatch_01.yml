@@ -1,0 +1,38 @@
+name: Workflow dispatch
+
+on:
+
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+      notify:
+          description: 'Notify of event trigger'
+          required: false
+          default:  false
+          type: boolean
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log inputs
+        run: |
+          echo "Log level: $LEVEL"
+        env:
+          LEVEL: ${{ github.event.inputs.logLevel }}
+  
+  notify: 
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.event.inputs.notify == 'true'
+    steps:
+      - run: echo "Deployed to ${{ github.event.input.environment }}"
