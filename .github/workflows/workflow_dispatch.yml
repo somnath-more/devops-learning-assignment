@@ -19,14 +19,7 @@ on:
           - info
           - warning
           - debug
-      tags:
-        description: 'Test scenario tags'
-        required: false
-        type: boolean
-      environment:
-        description: 'Environment to run tests against'
-        type: string
-        required: true 
+
 
 jobs:
   log-the-inputs:
@@ -35,9 +28,6 @@ jobs:
       - name: Log inputs
         run: |
           echo "Log level: $LEVEL"
-          echo "Tags: $TAGS"
-          echo "Environment: $ENVIRONMENT"
         env:
           LEVEL: ${{ github.event.inputs.logLevel }}
-          TAGS: ${{ github.event.inputs.tags }}
-          ENVIRONMENT: ${{ github.event.inputs.environment }}
+        
