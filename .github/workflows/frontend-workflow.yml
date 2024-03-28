@@ -1,0 +1,70 @@
+name: CI Workflow for Frontend Application
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened ,reopened,synchronize]
+
+jobs:
+  build-frontend:
+    name: Frontend Build analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    defaults:
+        run:
+          working-directory: frontend
+    permissions:
+       contents: write
+       packages: write
+
+    steps:
+      - name: Copy The All Directory in runner
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '21' # or any preferred node version
+## Implement catch
+
+      #Implement Catching Stratergy
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+        # npm cache files are stored in `~/.npm` on Linux/macOS
+         path: ${{ github.workspace }}/frontend/node_modules # Change the path to the node_modules folder.
+         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
+      - name: Install the dependencies
+        if: steps.cache-npm.outputs.cache-hit!= 'true'
+        run: npm install --legacy-peer-deps
+
+      - name: Test The Application
+        run: npm run test 
+
+      - name: Build
+        run: npm run build
+       
+      - name: GHCR Login to Github Runner
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+    
+      - name: Build and push Image to ghcr
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/docker-backend:frontend
+          context: frontend/
+
