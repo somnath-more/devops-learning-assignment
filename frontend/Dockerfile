@@ -1,5 +1,5 @@
-# Build stage
-FROM node:18 AS build
+# Build stage : Multiple Stage Build
+FROM node:latest AS build
 
 WORKDIR /app
 
