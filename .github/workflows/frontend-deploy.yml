@@ -73,7 +73,7 @@ jobs:
 
             - name: Deploy The Frontend Application
               run: |
-                ssh -o StrictHostKeyChecking=no -i first-demo.pem ubuntu@${{ secrets.SSH_HOST }}'
+                ssh -o StrictHostKeyChecking=no -i first-demo.pem ubuntu@ec2-13-60-157-8.eu-north-1.compute.amazonaws.com'
                 docker -v &&
                 docker login --username "${{ github.actor }}" --password "${{ secrets.PAT_TOKEN }}" ghcr.io &&
                 docker pull ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:frontend-${{ github.run_number }} &&
