@@ -2,7 +2,7 @@ name: Frontend CI-CD Deployment Using EC2
 on:
     push:
         branches:
-            - main
+            - REACT-DEMO
     pull_request:
        types: ["opened","synchronize","reopened"]
        
