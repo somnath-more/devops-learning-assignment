@@ -40,11 +40,13 @@ jobs:
               continue-on-error: true
               run: npm list
 
-            - name: Test The Application
+            - name: Install dependacies of the Application
               run: |
                 npm install
-             
-            # npm run test
+            - name: Test the Application
+              run: |
+                npm test
+           
             - name: Build the Application
               run: npm run build
 
@@ -73,7 +75,7 @@ jobs:
 
             - name: Deploy The Frontend Application
               run: |
-                ssh -o StrictHostKeyChecking=no -i first-demo.pem ubuntu@ec2-13-60-157-8.eu-north-1.compute.amazonaws.com '
+                ssh -o StrictHostKeyChecking=no -i first-demo.pem ${{secrets.SSH_HOST}}@$${{secrets.SSH_USERNAME}} '
                 docker -v &&
                 docker login --username "${{ github.actor }}" --password "${{ secrets.PAT_TOKEN }}" ghcr.io &&
                 docker pull ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:frontend-${{ github.run_number }} &&
