@@ -59,7 +59,7 @@ jobs:
             - name: Build and push Docker image
               uses: docker/build-push-action@v3
               with:
-                context: frontend/
+                context: demo-frontend/
                 tags: ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:frontend-${{ github.run_number }}
                 push: true
  
