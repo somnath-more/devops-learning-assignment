@@ -1,0 +1,27 @@
+name: Learning  Dispatch workflow
+
+on:
+
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+
+
+jobs:
+  log-the-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log inputs
+        run: |
+          echo "Log level: $LEVEL"
+        env:
+          LEVEL: ${{ github.event.inputs.logLevel }}
+        
