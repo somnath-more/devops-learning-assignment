@@ -1,0 +1,18 @@
+version: '3'
+services:
+   web-app1:
+     image: nginx
+     ports:
+      - "8081:80"
+   web-app2:
+      image: nginx
+      ports:
+       - "8083:80"
+      container_name: nginx
+
+      # Health check of the container 
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:80"]
+        interval: 30s
+        timeout: 10s
+        retries: 3
